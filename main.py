@@ -6,6 +6,7 @@ from keras.preprocessing import image
 from PIL import Image
 
 # create a streamlit app
+st.set_page_config(page_title="Deteksi Nominal Uang Rupiah")
 st.title("Deteksi Nominal Uang Rupiah Indonesia")
 st.header("Aplikasi web untuk mendeteksi Nominal Uang Rupiah Indonesia Emisi 2016")
 
