@@ -1,8 +1,6 @@
 import streamlit as st
-import cv2
 import numpy as np
 from keras.models import load_model
-from keras.preprocessing import image
 from PIL import Image
 
 # create a streamlit app
@@ -21,16 +19,19 @@ else:
     slot.text('Sedang Memprediksi....')
 
     test_image = Image.open(image)
-    st.image(image, channels="BGR", caption="Input Image", width=400)
+    st.image(test_image, channels="BGR", caption="Input Image", width=400)
+    
     # preprocess the image
-    cv_image = np.array(test_image)
-    image = cv2.resize(cv_image, (224, 224))
-    image = image / 255.0
-    image = np.expand_dims(image, axis=0)
+    test_image = test_image.resize((224,224))
+    image_array = np.array(test_image)
+    image_array = image_array / 255.0
+    image_array = np.expand_dims(image_array, axis=0)
+
     # predict the label
-    prediction = model.predict(image)
+    prediction = model.predict(image_array)
     label = labels[np.argmax(prediction)]
     score = format(np.max(prediction)*100, '.2f')
+
     output = 'Label yang diprediksi adalah ' + label + ' dengan Skor kepercayaan : ' + score + '%'
     slot.text('Prediksi Selesai!')
     st.success(output)
